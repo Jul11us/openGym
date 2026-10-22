@@ -36,6 +36,8 @@ jobs:
       - run: node scripts/check-public-release.mjs
       - run: npm run install:ci
         working-directory: sites/opengym
+      - run: npm ci --include=dev --include=optional --no-audit --no-fund
+        working-directory: sites/opengym/gym-client
       - run: node --experimental-strip-types --test tests/*.test.mjs
         working-directory: sites/opengym
       - run: npm test -- --maxWorkers=4
