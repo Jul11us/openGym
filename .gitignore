@@ -30,3 +30,8 @@ frontend/bundle-size.json
 
 # Local planning notes
 docs/superpowers/plans/
+
+# Private local plans, provider credentials and release workspace artifacts.
+/my-plans/
+/coach-auth/
+/outputs/

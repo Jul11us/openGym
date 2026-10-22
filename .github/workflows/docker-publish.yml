@@ -23,6 +23,8 @@ permissions:
 
 jobs:
   build:
+    # This fork publishes source; release images belong to the upstream project.
+    if: github.repository == 'DuarteSantos8/openGym'
     runs-on: ubuntu-latest
     strategy:
       matrix:

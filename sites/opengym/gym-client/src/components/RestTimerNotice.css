@@ -1,0 +1,12 @@
+#timer:has(.rest-notice){flex-wrap:wrap}
+#timer .rest-notice{
+  flex:0 0 100%;display:flex;align-items:center;gap:12px;
+  padding-block:2px 10px;border-bottom:var(--hair) solid var(--sep);
+  color:var(--label-2);font-size:14px;line-height:1.5;
+}
+#timer .rest-notice p{flex:1;min-width:0;margin:0}
+#timer .rest-notice .btn{flex:none;min-height:44px;white-space:nowrap}
+/* The expanded dock must leave every final set and Finish control scrollable.
+   Its actual height is measured again when text wraps, the viewport resizes,
+   or the notice is dismissed. No rule matches the ordinary/native timer. */
+body.resting.has-rest-notice #app{padding-bottom:var(--rest-notice-bottom-space,calc(300px + var(--sab)))}

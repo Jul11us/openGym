@@ -1,0 +1,44 @@
+name: Hosted edition
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sites/opengym/**'
+      - 'scripts/check-public-release.mjs'
+      - '.github/workflows/hosted.yml'
+  pull_request:
+    paths:
+      - 'sites/opengym/**'
+      - 'scripts/check-public-release.mjs'
+      - '.github/workflows/hosted.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hosted-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            sites/opengym/package-lock.json
+            sites/opengym/gym-client/package-lock.json
+      - run: node scripts/check-public-release.mjs
+      - run: npm run install:ci
+        working-directory: sites/opengym
+      - run: node --experimental-strip-types --test tests/*.test.mjs
+        working-directory: sites/opengym
+      - run: npm test -- --maxWorkers=4
+        working-directory: sites/opengym/gym-client
+      - run: npm run build
+        working-directory: sites/opengym
